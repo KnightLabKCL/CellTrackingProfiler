@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<protocol VERSION="4">
+<blocks>
+<block ID="329769327" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Folder" height="61" keepsResults="true" width="142" xLocation="7" yLocation="286">
+<variables>
+<input>
+<variable ID="folder" name="folder" runtime="false" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="1729519073" blockType="plugins.caroff.readfile.ReadFile" className="plugins.caroff.readfile.ReadFile" collapsed="false" definedName="Read file" height="108" keepsResults="true" width="201" xLocation="256" yLocation="3">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel0_ROI+Label.xls" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1508538229" blockType="plugins.caroff.readfile.ReadFile" className="plugins.caroff.readfile.ReadFile" collapsed="false" definedName="Read file" height="108" keepsResults="true" width="203" xLocation="256" yLocation="107">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel0_tracks.xml" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="942779349" blockType="plugins.caroff.readfile.ReadFile" className="plugins.caroff.readfile.ReadFile" collapsed="false" definedName="Read file" height="108" keepsResults="true" width="203" xLocation="256" yLocation="224">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel1_ROI+Label.xls" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1224100139" blockType="plugins.caroff.readfile.ReadFile" className="plugins.caroff.readfile.ReadFile" collapsed="false" definedName="Read file" height="108" keepsResults="true" width="203" xLocation="257" yLocation="326">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel1_tracks.xml" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1038895176" blockType="plugins.caroff.readfile.ReadFile" className="plugins.caroff.readfile.ReadFile" collapsed="false" definedName="Read file" height="108" keepsResults="true" width="203" xLocation="257" yLocation="448">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel2_ROI+Label.xls" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="955965012" blockType="plugins.caroff.readfile.ReadFile" className="plugins.caroff.readfile.ReadFile" collapsed="false" definedName="Read file" height="108" keepsResults="true" width="203" xLocation="257" yLocation="551">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel2_tracks.xml" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="2071369005" blockType="plugins.caroff.milkshake.Milkshake" className="plugins.caroff.milkshake.Milkshake" collapsed="false" definedName="Milkshake" height="105" keepsResults="true" width="277" xLocation="479" yLocation="50">
+<variables>
+<input>
+<variable ID="File with ROIs" name="File with ROIs" runtime="false" visible="true"/>
+<variable ID="File with Labels" name="File with tracks (.xml)" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="Output File" name="Result" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1726142407" blockType="plugins.caroff.milkshake.Milkshake" className="plugins.caroff.milkshake.Milkshake" collapsed="false" definedName="Milkshake" height="105" keepsResults="true" width="277" xLocation="480" yLocation="271">
+<variables>
+<input>
+<variable ID="File with ROIs" name="File with ROIs" runtime="false" visible="true"/>
+<variable ID="File with Labels" name="File with tracks (.xml)" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="Output File" name="Result" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1148362152" blockType="plugins.caroff.milkshake.Milkshake" className="plugins.caroff.milkshake.Milkshake" collapsed="false" definedName="Milkshake" height="105" keepsResults="true" width="277" xLocation="483" yLocation="495">
+<variables>
+<input>
+<variable ID="File with ROIs" name="File with ROIs" runtime="false" visible="true"/>
+<variable ID="File with Labels" name="File with tracks (.xml)" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="Output File" name="Result" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="1729519073" dstVarID="Folder" srcBlockID="329769327" srcVarID="folder"/>
+<link dstBlockID="1508538229" dstVarID="Folder" srcBlockID="329769327" srcVarID="folder"/>
+<link dstBlockID="942779349" dstVarID="Folder" srcBlockID="329769327" srcVarID="folder"/>
+<link dstBlockID="1224100139" dstVarID="Folder" srcBlockID="329769327" srcVarID="folder"/>
+<link dstBlockID="1038895176" dstVarID="Folder" srcBlockID="329769327" srcVarID="folder"/>
+<link dstBlockID="955965012" dstVarID="Folder" srcBlockID="329769327" srcVarID="folder"/>
+<link dstBlockID="2071369005" dstVarID="File with ROIs" srcBlockID="1729519073" srcVarID="File"/>
+<link dstBlockID="2071369005" dstVarID="File with Labels" srcBlockID="1508538229" srcVarID="File"/>
+<link dstBlockID="1726142407" dstVarID="File with ROIs" srcBlockID="942779349" srcVarID="File"/>
+<link dstBlockID="1726142407" dstVarID="File with Labels" srcBlockID="1224100139" srcVarID="File"/>
+<link dstBlockID="1148362152" dstVarID="File with ROIs" srcBlockID="1038895176" srcVarID="File"/>
+<link dstBlockID="1148362152" dstVarID="File with Labels" srcBlockID="955965012" srcVarID="File"/>
+</links>
+</protocol>

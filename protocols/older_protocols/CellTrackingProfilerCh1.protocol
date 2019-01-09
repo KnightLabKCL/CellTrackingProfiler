@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<protocol VERSION="4">
+<blocks>
+<block ID="709701154" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Folder" height="66" keepsResults="true" width="262" xLocation="4" yLocation="5">
+<variables>
+<input>
+<variable ID="folder" name="folder" runtime="false" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="967014302" blockType="plugins.tprovoost.sequenceblocks.files.LoadSequence" className="plugins.tprovoost.sequenceblocks.SequenceBlocks" collapsed="false" definedName="Load sequence" height="108" keepsResults="true" width="195" xLocation="58" yLocation="79">
+<variables>
+<input>
+<variable ID="file" name="file" runtime="false" type="java.io.File" visible="true"/>
+<variable ID="serie" name="serie" runtime="false" value="0" visible="true"/>
+</input>
+<output>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="53820754" blockType="plugins.tprovoost.sequenceblocks.extract.ExtractChannel" className="plugins.tprovoost.sequenceblocks.SequenceBlocks" collapsed="false" definedName="Extract channel" height="108" keepsResults="true" width="229" xLocation="17" yLocation="235">
+<variables>
+<input>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+<variable ID="channel" name="channel" runtime="false" value="1" visible="true"/>
+</input>
+<output>
+<variable ID="extracted" name="extracted" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1312039019" blockType="plugins.caroff.myhkmeans.MyHierarchicalKMeans" className="plugins.caroff.myhkmeans.MyHierarchicalKMeans" collapsed="false" definedName="My hierarchical K means" height="277" keepsResults="true" width="289" xLocation="265" yLocation="282">
+<variables>
+<input>
+<variable ID="Input" name="Input" runtime="false" visible="true"/>
+<variable ID="Frame" name="Frame" runtime="false" value="-1" visible="true"/>
+<variable ID="Gaussian pre-filter" name="Gaussian pre-filter" runtime="false" value="0.0" visible="true"/>
+<variable ID="Min size (px)" name="Min size (px)" runtime="false" value="200" visible="true"/>
+<variable ID="Max size (px)" name="Max size (px)" runtime="false" value="400" visible="true"/>
+<variable ID="Number of classes" name="Number of classes" runtime="false" value="5" visible="true"/>
+<variable ID="Final threshold" name="Final threshold" runtime="false" value="0.0" visible="true"/>
+</input>
+<output>
+<variable ID="binary sequence" name="binary sequence" runtime="false" visible="true"/>
+<variable ID="output objects" name="objects" runtime="false" visible="true"/>
+<variable ID="output regions" name="list of ROI" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="227356089" blockType="plugins.tprovoost.scripteditor.scriptblock.Javascript" className="plugins.tprovoost.scripteditor.scriptblock.Javascript" collapsed="false" definedName="Javascript" height="192" keepsResults="true" width="395" xLocation="1179" yLocation="127">
+<variables>
+<input>
+<variable ID="Script" name="Script" runtime="false" value="// SAVE THE SEGMENTATION RESULT&#10;importClass(Packages.icy.file.Saver)&#10;importClass(Packages.java.io.File)&#10;importClass(Packages.java.text.DecimalFormat);&#10;importClass(Packages.icy.sequence.Sequence)&#10;importClass(Packages.plugins.tprovoost.scripteditor.uitools.filedialogs.FileDialog)&#10;importClass(Packages.icy.file.FileUtil)&#10;&#10;// access a la sequence&#10;var sequence = input0;&#10;&#10;if (sequence != null)&#10;{&#10;&#9;// creation du dossier&#10;&#9;var dossierPath = input1.getAbsolutePath() + &quot;/Channel1&quot;;&#10;&#9;var created = FileUtil.createDir(dossierPath);&#9;&#9;&#9;// File&#10;&#9;if (!created) throw &quot;User cancelled.&quot;&#9;// String&#10;&#9;output0 = &quot;Channel1&quot;;&#10;&#9;var directory = FileUtil.getDirectory(dossierPath);&#9;&#9;// String&#10;&#9;var existsDirectory = FileUtil.createDir(directory);&#9;&#9;// boolean&#10;&#9;&#10;&#9;// gestion des noms de fichiers&#10;&#9;decimalFormat = DecimalFormat(&quot;0000&quot;);&#10;&#9;tempName = FileUtil.getFileName(dossierPath, false);&#10;&#10;&#9;// acces aux parametres de l'image et creation des images&#10;&#9;var startX = 0;&#10;&#9;var startY = 0;&#10;&#9;var startZ = 0;&#10;&#9;var startT = 0;&#10;&#9;var sizeX = sequence.getSizeX();&#10;&#9;var sizeY = sequence.getSizeY();&#10;&#9;var sizeZ = sequence.getSizeZ();&#10;&#9;var sizeT = sequence.getSizeT();&#10;&#10;&#9;// creation des images&#10;&#9;var seq = new Array();&#10;&#9;for ( i = 0 ; i &lt; sizeT; i++)&#10;&#9;{&#10;&#9;&#9;seq[i] = sequence.getSubSequence(startX, startY, startZ, i, sizeX, sizeY, sizeZ, 1);&#10;&#9;}&#10;&#10;&#9;// sauvegarde de chacune des images dans un fichier contenant toutes les pas de temps&#10;&#9;var file = new Array();&#10;&#9;var fileName = new Array();&#10;&#9;for ( i = 0 ; i &lt; sizeT; i++)&#10;&#9;{&#10;&#9;&#9;fileName[i] = dossierPath + &quot;/&quot; + tempName + &quot;_t&quot; + decimalFormat.format(i);&#10;&#9;&#9;file[i] = File(fileName[i]);&#10;&#9;&#9;if (file[i].exists())&#10;&#9;&#9;{&#10;&#9;&#9;&#9;file[i]= File.delete();&#10;&#9;&#9;}&#10;&#9;&#9;Saver.save(seq[i],file[i],false);&#10;&#9;}&#10;}&#10;else&#10;{&#10;&#9;println(&quot;Ouvrir une image&quot;);&#10;}&#10;&#10;" visible="true"/>
+<variable ID="Add Input" name="Add Input" runtime="false" value="1" visible="true"/>
+<variable ID="Add output" name="Add output" runtime="false" value="0" visible="true"/>
+<variable ID="input0" name="input0" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+<variable ID="486860635" name="input1" runtime="true" type="java.io.File" visible="true"/>
+</input>
+<output>
+<variable ID="output0" name="output0" runtime="false" type="java.lang.String" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1911634359" blockType="plugins.adufour.roi.LabelExtractor" className="plugins.adufour.roi.LabelExtractor" collapsed="false" definedName="Label Extractor" height="126" keepsResults="true" width="289" xLocation="579" yLocation="367">
+<variables>
+<input>
+<variable ID="input sequence" name="Labeled sequence" runtime="false" visible="true"/>
+<variable ID="extract mode" name="Extract" runtime="false" value="ALL_LABELS_VS_BACKGROUND" visible="true"/>
+<variable ID="value" name="Value" runtime="false" value="0.0" visible="true"/>
+</input>
+<output>
+<variable ID="ROI" name="Extracted ROI" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1946693343" blockType="plugins.adufour.roi.ROIMeasures" className="plugins.adufour.roi.ROIMeasures" collapsed="false" definedName="ROI Statistics" height="128" keepsResults="true" width="289" xLocation="879" yLocation="409">
+<variables>
+<input>
+<variable ID="measures" name="Select features..." runtime="false" value="0" visible="true"/>
+<variable ID="Regions of interest" name="Regions of interest" runtime="false" visible="true"/>
+<variable ID="Sequence" name="Sequence" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="Workbook" name="Workbook" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="800645658" blockType="plugins.adufour.roi.ROIMeasures" className="plugins.adufour.roi.ROIMeasures" collapsed="false" definedName="ROI Statistics" height="128" keepsResults="true" width="289" xLocation="880" yLocation="530">
+<variables>
+<input>
+<variable ID="measures" name="Select features..." runtime="false" value="0" visible="true"/>
+<variable ID="Regions of interest" name="Regions of interest" runtime="false" visible="true"/>
+<variable ID="Sequence" name="Sequence" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="Workbook" name="Workbook" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1832581199" blockType="plugins.caroff.selectfile.SelectFile" className="plugins.caroff.selectfile.SelectFile" collapsed="false" definedName="Select file" height="108" keepsResults="true" width="203" xLocation="1178" yLocation="646">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel1_ROI.xls" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1346230534" blockType="plugins.caroff.selectfile.SelectFile" className="plugins.caroff.selectfile.SelectFile" collapsed="false" definedName="Select file" height="108" keepsResults="true" width="203" xLocation="1179" yLocation="315">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" value="Channel1_Label.xls" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1297378709" blockType="plugins.adufour.blocks.tools.io.WorkbookToFile" className="plugins.adufour.blocks.tools.io.WorkbookToFile" collapsed="false" definedName="Workbook to file" height="124" keepsResults="true" width="516" xLocation="1414" yLocation="536">
+<variables>
+<input>
+<variable ID="workbook" name="workbook" runtime="false" visible="true"/>
+<variable ID="file format" name="file format" runtime="false" value="Spreadsheet" visible="true"/>
+<variable ID="output file" name="output file" runtime="false" visible="true"/>
+<variable ID="If file exists" name="If file exists" runtime="false" value="Overwrite" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="1355605612" blockType="plugins.adufour.blocks.tools.io.WorkbookToFile" className="plugins.adufour.blocks.tools.io.WorkbookToFile" collapsed="false" definedName="Workbook to file" height="130" keepsResults="true" width="516" xLocation="1412" yLocation="411">
+<variables>
+<input>
+<variable ID="workbook" name="workbook" runtime="false" visible="true"/>
+<variable ID="file format" name="file format" runtime="false" value="Spreadsheet" visible="true"/>
+<variable ID="output file" name="output file" runtime="false" visible="true"/>
+<variable ID="If file exists" name="If file exists" runtime="false" value="Overwrite" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="2052445511" blockType="plugins.caroff.selectfile.SelectFile" className="plugins.caroff.selectfile.SelectFile" collapsed="false" definedName="Select file" height="105" keepsResults="true" width="203" xLocation="1597" yLocation="228">
+<variables>
+<input>
+<variable ID="Folder" name="Folder" runtime="false" visible="true"/>
+<variable ID="File Name" name="File Name" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="File" name="File" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1125983321" blockType="plugins.caroff.roiwithlabelsinexcel.ROIWithLabelsInExcel" className="plugins.caroff.roiwithlabelsinexcel.ROIWithLabelsInExcel" collapsed="false" definedName="ROI with labels in excel" height="152" keepsResults="true" width="287" xLocation="2094" yLocation="506">
+<variables>
+<input>
+<variable ID="File with ROIs" name="File with ROIs" runtime="false" visible="true"/>
+<variable ID="File with Labels" name="File with labels" runtime="false" visible="true"/>
+<variable ID="Sequence" name="Input" runtime="false" visible="true"/>
+<variable ID="Remove input files" name="Remove input files" runtime="false" value="false" visible="true"/>
+</input>
+<output>
+<variable ID="Output File" name="Result" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="687010029" blockType="plugins.caroff.keyholetracker.KeyholeTracker" className="plugins.caroff.keyholetracker.KeyholeTracker" collapsed="false" definedName="Keyhole tracker" height="83" keepsResults="true" width="284" xLocation="1851" yLocation="274">
+<variables>
+<input>
+<variable ID="Segmented data Folder" name="Segmented data Folder" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="Output file" name="Output file" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="967014302" dstVarID="file" srcBlockID="709701154" srcVarID="folder"/>
+<link dstBlockID="53820754" dstVarID="sequence" srcBlockID="967014302" srcVarID="sequence"/>
+<link dstBlockID="1312039019" dstVarID="Input" srcBlockID="53820754" srcVarID="extracted"/>
+<link dstBlockID="227356089" dstVarID="input0" srcBlockID="1312039019" srcVarID="binary sequence"/>
+<link dstBlockID="227356089" dstVarID="486860635" srcBlockID="709701154" srcVarID="folder"/>
+<link dstBlockID="1911634359" dstVarID="input sequence" srcBlockID="1312039019" srcVarID="binary sequence"/>
+<link dstBlockID="1946693343" dstVarID="Regions of interest" srcBlockID="1911634359" srcVarID="ROI"/>
+<link dstBlockID="1946693343" dstVarID="Sequence" srcBlockID="1312039019" srcVarID="binary sequence"/>
+<link dstBlockID="800645658" dstVarID="Regions of interest" srcBlockID="1312039019" srcVarID="output regions"/>
+<link dstBlockID="1832581199" dstVarID="Folder" srcBlockID="709701154" srcVarID="folder"/>
+<link dstBlockID="1346230534" dstVarID="Folder" srcBlockID="709701154" srcVarID="folder"/>
+<link dstBlockID="1297378709" dstVarID="workbook" srcBlockID="800645658" srcVarID="Workbook"/>
+<link dstBlockID="1297378709" dstVarID="output file" srcBlockID="1832581199" srcVarID="File"/>
+<link dstBlockID="1355605612" dstVarID="workbook" srcBlockID="1946693343" srcVarID="Workbook"/>
+<link dstBlockID="1355605612" dstVarID="output file" srcBlockID="1346230534" srcVarID="File"/>
+<link dstBlockID="800645658" dstVarID="Sequence" srcBlockID="967014302" srcVarID="sequence"/>
+<link dstBlockID="2052445511" dstVarID="File Name" srcBlockID="227356089" srcVarID="output0" srcVarType="java.lang.String"/>
+<link dstBlockID="2052445511" dstVarID="Folder" srcBlockID="709701154" srcVarID="folder"/>
+<link dstBlockID="1125983321" dstVarID="File with Labels" srcBlockID="1355605612" srcVarID="output file"/>
+<link dstBlockID="1125983321" dstVarID="File with ROIs" srcBlockID="1297378709" srcVarID="output file"/>
+<link dstBlockID="1125983321" dstVarID="Sequence" srcBlockID="967014302" srcVarID="sequence"/>
+<link dstBlockID="687010029" dstVarID="Segmented data Folder" srcBlockID="2052445511" srcVarID="File"/>
+</links>
+</protocol>
